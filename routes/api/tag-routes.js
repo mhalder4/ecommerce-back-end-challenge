@@ -9,8 +9,7 @@ router.get('/', async (req, res) => {
   try {
     const payload = await Tag.findAll({
       include: {
-        model: Product,
-        as: "products"
+        model: Product
       }
     });
     res.status(200).json({ status: "success", payload });
@@ -25,8 +24,7 @@ router.get('/:id', async (req, res) => {
   try {
     const payload = await Tag.findByPk(req.params.id, {
       include: {
-        model: Product,
-        as: "products"
+        model: Product
       }
     });
     res.status(200).json({ status: "success", payload });
@@ -35,16 +33,47 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   // create a new tag
+  try {
+    const payload = await Tag.create(req.body);
+    // Ex req.body {tag_name: xxxxxx}
+    res.status(200).json({ status: "success", payload });
+  } catch (err) {
+    res.status(500).json({ status: "error", payload: err.message });
+  }
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', async (req, res) => {
   // update a tag's name by its `id` value
+  try {
+    const payload = await Tag.update(
+      req.body,
+      {
+        where: {
+          id: req.params.id
+        }
+      }
+
+    );
+    res.status(200).json({ status: "success", payload });
+  } catch (err) {
+    res.status(500).json({ status: "error", payload: err.message });
+  }
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
   // delete on tag by its `id` value
+  try {
+    const payload = await Tag.destroy({
+      where: {
+        id: req.params.id
+      }
+    });
+    res.status(200).json({ status: "success" });
+  } catch (err) {
+    res.status(500).json({ status: "error", payload: err.message });
+  }
 });
 
 module.exports = router;

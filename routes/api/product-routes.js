@@ -13,8 +13,7 @@ router.get('/', async (req, res) => {
         model: Category
       },
       {
-        model: Tag,
-        as: "tags"
+        model: Tag
       }]
     });
     // console.log(payload);
@@ -34,8 +33,7 @@ router.get('/:id', async (req, res) => {
         model: Category
       },
       {
-        model: Tag,
-        as: "tags"
+        model: Tag
       }]
     });
     res.status(200).json({ status: "success", payload });
@@ -122,8 +120,23 @@ router.put('/:id', (req, res) => {
     });
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
   // delete one product by its `id` value
+  try {
+    await ProductTag.destroy({
+      where: {
+        product_id: req.params.id
+      }
+    });
+    const payload = await Product.destroy({
+      where: {
+        id: req.params.id
+      }
+    });
+    res.status(200).json({ status: "success" });
+  } catch (err) {
+    res.status(500).json({ status: "error", payload: err.message });
+  }
 });
 
 module.exports = router;
