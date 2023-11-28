@@ -12,6 +12,8 @@ This was an exercise meant to help practice the writing of models and routes in 
 First, the schema.sql file must be run through the mysql shell in order to create the database. Then, the database must be seeded using `npm run seed` from the root of the project. Finally, the server must be started by using the command `npm run watch`. Once these steps have been followed, the routes will work properly to access the pre-created items in the database and add items of your own to the database. The pertinent files for the project, including this README can all be found in the Github repository located at: https://github.com/mhalder4/ecommerce-back-end-challenge.
 ## Usage
 An example video of the database being set up and seeded, followed by the server being started and the routes being hit can be seen below.
+
+![A gif of the program running.](./assets/gifs/ecommerce-back-end-challenge.gif)
 ## Credits
 A boilerplate file was created by me, with the assitance of my instructor during class time was used as a template for many of the routes and models.
 ## License
